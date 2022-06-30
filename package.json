@@ -1,0 +1,17 @@
+{
+  "name": "makes-parties",
+  "version": "1.0.0",
+  "description": "Express app to attends to a party",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "npm run dev"
+  },
+  "author": "Francois Pagou",
+  "license": "ISC",
+  "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.5",
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6"
+  }
+}
