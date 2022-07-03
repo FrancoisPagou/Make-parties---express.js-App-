@@ -1,9 +1,8 @@
-//Initialize express
-
 import express from "express";
 import {engine} from "express-handlebars";
 import Handlebars from "handlebars";
 import {allowInsecurePrototypeAccess} from '@handlebars/allow-prototype-access';
+import path from 'path';
 
 const app = express();
 
@@ -15,9 +14,9 @@ app.set('view engine', 'handlebars');
 
 // OUR MOCK ARRAY OF PROJECTS
 var events = [
-    { title: "I am your first event", desc: "A great event that is super fun to look at and good", imgUrl: "assets/img/waterfall.jpg" },
-    { title: "I am your second event", desc: "A great event that is super fun to look at and good", imgUrl: "assets/img/waterfall.jpg" },
-    { title: "I am your third event", desc: "A great event that is super fun to look at and good", imgUrl: "assets/img/waterfall.jpg" }
+    { title: "I am your first event", desc: "A great event that is super fun to look at and good", imgUrl: path.resolve("./assets/img/waterfall.jpg") },
+    { title: "I am your second event", desc: "A great event that is super fun to look at and good", imgUrl: path.resolve("./assets/img/waterfall.jpg") },
+    { title: "I am your third event", desc: "A great event that is super fun to look at and good", imgUrl: path.resolve("./assets/img/waterfall.jpg") }
 ];
 
 // render home page
