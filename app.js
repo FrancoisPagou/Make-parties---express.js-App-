@@ -3,8 +3,12 @@ import {engine} from "express-handlebars";
 import Handlebars from "handlebars";
 import {allowInsecurePrototypeAccess} from '@handlebars/allow-prototype-access';
 import path from 'path';
+import bodyParser from 'body-parser';
+
 
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Use "main" as our default layout.
 app.engine('handlebars', engine({ defaultLayout: 'main', handlebars: allowInsecurePrototypeAccess(Handlebars) }));
@@ -27,6 +31,16 @@ app.get('/', (req, res) => {
 app.get('/events', (req, res) => {
     res.render('event-index', {events});
 });
+
+// NEW
+app.get('/events/new', (req, res) => {
+    res.render('events-new', {});
+});
+
+// CREATE
+app.post('/events', (req, res) => {
+    console.log(req.body);
+})
 
 
 
