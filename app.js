@@ -4,6 +4,7 @@ import Handlebars from "handlebars";
 import {allowInsecurePrototypeAccess} from '@handlebars/allow-prototype-access';
 import path from 'path';
 import bodyParser from 'body-parser';
+import models from './models/index.js';
 
 
 const app = express();
