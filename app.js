@@ -1,10 +1,10 @@
-import express from "express";
-import {engine} from "express-handlebars";
-import Handlebars from "handlebars";
-import {allowInsecurePrototypeAccess} from '@handlebars/allow-prototype-access';
-import path from 'path';
-import bodyParser from 'body-parser';
-import models from './models/index.js';
+const express = require("express");
+const {engine} = require("express-handlebars");
+const Handlebars = require("handlebars");
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
+const path = require('path');
+const bodyParser = require('body-parser');
+const models = require('./models');
 
 
 const app = express();
@@ -26,7 +26,9 @@ var events = [
 
 // render home page
 app.get('/', (req, res) => {
-    res.render('event-index', {events});
+    models.Event.findAll({ order: [['createdAt', 'DESC']] }).then(events => {
+        res.render('events-index', { events: events });
+  })
 });
 
 app.get('/events', (req, res) => {
@@ -40,7 +42,11 @@ app.get('/events/new', (req, res) => {
 
 // CREATE
 app.post('/events', (req, res) => {
-    console.log(req.body);
+    models.Event.create(req.body).then(event => {
+        res.redirect(`/`);
+    }).catch((err) => {
+        console.log(err)
+    });
 })
 
 
