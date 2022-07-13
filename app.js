@@ -1,4 +1,5 @@
 const express = require("express");
+const methodOverride = require('method-override')
 const {engine} = require("express-handlebars");
 const Handlebars = require("handlebars");
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
@@ -10,6 +11,7 @@ const models = require('./models');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 // Use "main" as our default layout.
 app.engine('handlebars', engine({ defaultLayout: 'main', handlebars: allowInsecurePrototypeAccess(Handlebars) }));
@@ -61,6 +63,27 @@ app.get('/events/:id', (req, res) => {
     });
 });
 
+// EDIT
+app.get('/events/:id/edit', (req, res) => {
+    models.Event.findByPk(req.params.id).then((event) => {
+        res.render('events-edit', { event: event });
+    }).catch((err) => {
+        console.log(err.message);
+    })
+});
+
+// UPDATE
+app.put('/events/:id', (req, res) => {
+    models.Event.findByPk(req.params.id).then(event => {
+        event.update(req.body).then(event => {
+            res.redirect(`/events/${req.params.id}`);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }).catch((err) => {
+        console.log(err);
+    });
+});
 
 //Choose your port 
 const port = process.env.PORT || 3000;
