@@ -7,7 +7,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const models = require('./models');
 
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,6 +17,7 @@ app.engine('handlebars', engine({ defaultLayout: 'main', handlebars: allowInsecu
 // Use handlebars to render
 app.set('view engine', 'handlebars');
 
+require('./controllers/events')(app, models);
 
 // OUR MOCK ARRAY OF PROJECTS
 var events = [
@@ -25,13 +25,6 @@ var events = [
     { title: "I am your second event", desc: "A great event that is super fun to look at and good", imgUrl: path.resolve("./assets/img/waterfall.jpg") },
     { title: "I am your third event", desc: "A great event that is super fun to look at and good", imgUrl: path.resolve("./assets/img/waterfall.jpg") }
 ];
-
-// render home page
-app.get('/', (req, res) => {
-    models.Event.findAll({ order: [['createdAt', 'DESC']] }).then(events => {
-        res.render('events-index', { events: events });
-  })
-});
 
 app.get('/events', (req, res) => {
     res.render('event-index', {events});
