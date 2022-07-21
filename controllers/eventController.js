@@ -1,6 +1,8 @@
 
 const models = require('../models');
 const moment = require('moment');
+const path = require('path');
+const Resize = require('../utils/Resize');
 
 exports.getAllEvents = (req, res) => {
     models.Event.findAll({ order: [['createdAt', 'DESC']] }).then(events => {
@@ -12,12 +14,11 @@ exports.getCreateEventForm = (req, res) => {
     res.render('events-new', {});
 }
 
-exports.createEvent = (req, res) => {
-    models.Event.create(req.body).then(event => {
-        res.redirect(`/events/${event.id}`);
-    }).catch((err) => {
-        console.log(err)
-    });
+exports.createEvent = async (req, res) => {
+    console.log("BODY CREATE ", req.body);
+    await processImageUpload(req, res);
+    const event = await models.Event.create(req.body);
+    res.redirect(`/events/${event.id}`);
 }
 
 exports.showEvent = (req, res) => {
@@ -58,4 +59,16 @@ exports.deleteEvent = (req, res) => {
     }).catch((err) => {
         console.log(err);
     });
+}
+
+async function processImageUpload(req, res) {
+    const imagePath = path.join(__dirname, '/public/images');
+    const fileUpload = new Resize(imagePath);
+  
+    if (!req.file) {
+        res.status(401).json({error: 'Please provide an image'});
+    }
+    const filename = await fileUpload.save(req.file.buffer);
+
+    return res.status(200).json({ name: filename });
 }

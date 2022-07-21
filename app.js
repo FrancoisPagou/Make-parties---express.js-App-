@@ -17,6 +17,7 @@ app.use(methodOverride('_method'));
 app.engine('handlebars', engine({ defaultLayout: 'main', handlebars: allowInsecurePrototypeAccess(Handlebars) }));
 app.set('view engine', 'handlebars');
 
+/* router */
 app.use('/', eventsRouter);
 app.use('/events', rsvpRouter);
 

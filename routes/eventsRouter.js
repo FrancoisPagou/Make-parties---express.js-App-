@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const eventController = require('../controllers/eventController')
+const upload = require('../utils/uploadMiddleware');
 
 router.get('/', (req, res) => {
     eventController.getAllEvents(req, res);
@@ -15,7 +16,8 @@ router.get('/events/new', (req, res) => {
 });
 
 // CREATE
-router.post('/events', (req, res) => {
+    upload.single('imgUrl');
+router.post('/events', upload.single('imgUrl'), async (req, res) => {
     eventController.createEvent(req, res);
 });
 

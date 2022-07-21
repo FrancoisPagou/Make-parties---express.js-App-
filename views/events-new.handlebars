@@ -1,7 +1,7 @@
 <!-- views/events-new.handlebars -->
 
 <div class="col-lg-6 offset-lg-3">
-    <form method="POST" action="/events">
+    <form method="POST" action="/events" enctype="multipart/form-data">
         <fieldset>
             <legend>New Event</legend>
                 {{> events-form }}
