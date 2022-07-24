@@ -16,8 +16,9 @@ app.use(methodOverride('_method'));
 /* Use "main" as our default layout. */
 app.engine('handlebars', engine({ defaultLayout: 'main', handlebars: allowInsecurePrototypeAccess(Handlebars) }));
 app.set('view engine', 'handlebars');
+app.use(express.static(`${__dirname}/public`));
 
-/* router */
+/* routes */
 app.use('/', eventsRouter);
 app.use('/events', rsvpRouter);
 

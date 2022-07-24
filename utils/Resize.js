@@ -7,8 +7,7 @@ class Resize {
         this.folder = folder;
     }
 
-    async save(buffer) {
-        const filename = Resize.filename();
+    async save(buffer, filename) {
         const filepath = this.filepath(filename);
 
         await sharp(buffer)
@@ -19,10 +18,6 @@ class Resize {
         .toFile(filepath);
         
         return filename;
-    }
-
-    static filename() {
-        return `${uuidv4()}.png`;
     }
 
     filepath(filename) {

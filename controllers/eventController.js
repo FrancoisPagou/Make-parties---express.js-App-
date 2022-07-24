@@ -15,10 +15,12 @@ exports.getCreateEventForm = (req, res) => {
 }
 
 exports.createEvent = async (req, res) => {
-    console.log("BODY CREATE ", req.body);
     await processImageUpload(req, res);
-    const event = await models.Event.create(req.body);
-    res.redirect(`/events/${event.id}`);
+    const event = await models.Event.create({...req.body, imgUrl: req.file.originalname});
+
+    console.log("event ", req.body);
+
+    await res.redirect(`/events/${event.id}`);
 }
 
 exports.showEvent = (req, res) => {
@@ -34,22 +36,21 @@ exports.showEvent = (req, res) => {
 
 exports.getEditEventForm = (req, res) => {
     models.Event.findByPk(req.params.id).then((event) => {
+        console.log("Edit event ", event)
+
         res.render('events-edit', { event: event });
     }).catch((err) => {
         console.log(err.message);
     })
 }
 
-exports.updateEvent = (req, res) => {
-    models.Event.findByPk(req.params.id).then(event => {
-        event.update(req.body).then(event => {
-            res.redirect(`/events/${req.params.id}`);
-        }).catch((err) => {
-            console.log(err);
-        });
-    }).catch((err) => {
-        console.log(err);
-    });
+exports.updateEvent = async (req, res) => {
+    console.log("event ", req.body)
+
+    await processImageUpload(req, res);
+    const event = await models.Event.findByPk(req.params.id);
+    await event.update({...req.body, imgUrl: req.file.originalname});
+    await res.redirect(`/events/${req.params.id}`);
 }
 
 exports.deleteEvent = (req, res) => {
@@ -62,13 +63,13 @@ exports.deleteEvent = (req, res) => {
 }
 
 async function processImageUpload(req, res) {
-    const imagePath = path.join(__dirname, '/public/images');
+    const imagePath = path.join(path.resolve("./"), '/public/images');
     const fileUpload = new Resize(imagePath);
-  
+
     if (!req.file) {
         res.status(401).json({error: 'Please provide an image'});
+        return;
     }
-    const filename = await fileUpload.save(req.file.buffer);
 
-    return res.status(200).json({ name: filename });
+    await fileUpload.save(req.file.buffer, req.file.originalname);
 }

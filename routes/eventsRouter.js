@@ -16,9 +16,8 @@ router.get('/events/new', (req, res) => {
 });
 
 // CREATE
-    upload.single('imgUrl');
 router.post('/events', upload.single('imgUrl'), async (req, res) => {
-    eventController.createEvent(req, res);
+    await eventController.createEvent(req, res);
 });
 
 // SHOW
@@ -32,8 +31,8 @@ router.get('/events/:id/edit', (req, res) => {
 });
 
 // UPDATE
-router.put('/events/:id', (req, res) => {
-    eventController.updateEvent(req, res);
+router.put('/events/:id', upload.single('imgUrl'), async (req, res) => {
+    await eventController.updateEvent(req, res);
 });
 
 // DELETE
