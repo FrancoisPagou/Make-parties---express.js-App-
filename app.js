@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 const eventsRouter = require('./routes/eventsRouter');
 const rsvpRouter = require('./routes/rsvpsRouter');
+const commentRouter = require('./routes/commentRouter');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.static(`${__dirname}/public`));
 /* routes */
 app.use('/', eventsRouter);
 app.use('/events', rsvpRouter);
+app.use('/events', commentRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
 
 	Event.associate = function(models) {
 		Event.hasMany(models.Rsvp);
+		Event.hasMany(models.Comment);
 	};
   return Event;
 };

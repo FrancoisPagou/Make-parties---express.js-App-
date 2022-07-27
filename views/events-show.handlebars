@@ -3,7 +3,19 @@
 		<img class="img-fluid w-100 rounded mb-3" src="/images/{{event.dataValues.imgUrl}}" alt="Card image cap">
 		<small class="text-muted">Created on: {{event.createdAtFormatted}}</small>
 		<h3>{{event.dataValues.title}}</h3>
-		<div class="lead">{{event.dataValues.desc}}</div>
+		<div class="lead mb-4">{{event.dataValues.desc}}</div>
+		
+		<div class="comment-label">Comments({{event.Comments.length}})</div>
+		<ul>
+			{{#each event.Comments}}
+				<li class="mb-4">{{this.content}}</li>
+			{{/each}}
+		</ul>
+		<form action="/events/{{event.id}}/comment" method="POST">
+			<div for="">Leave a comment:</div>
+			<textarea name="content" cols="50" rows="5"></textarea>
+			<p><button type="submit">Comment</button></p>
+		</form>
 		<div class="text-right">
 			<a href="/events/{{event.id}}/edit">Edit</a>
 		</div>

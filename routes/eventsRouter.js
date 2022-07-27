@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const eventController = require('../controllers/eventController')
+const eventController = require('../controllers/eventController');
 const upload = require('../utils/uploadMiddleware');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     eventController.getAllEvents(req, res);
 });
-router.get('/events', (req, res) => {
+router.get('/events', async (req, res) => {
     eventController.getAllEvents(req, res);
 });
 
@@ -17,16 +17,16 @@ router.get('/events/new', (req, res) => {
 
 // CREATE
 router.post('/events', upload.single('imgUrl'), async (req, res) => {
-    await eventController.createEvent(req, res);
+    eventController.createEvent(req, res);
 });
 
 // SHOW
-router.get('/events/:id', (req, res) => {
+router.get('/events/:id', async (req, res) => {
     eventController.showEvent(req, res);
 });
 
 // EDIT
-router.get('/events/:id/edit', (req, res) => {
+router.get('/events/:id/edit', async (req, res) => {
     eventController.getEditEventForm(req, res);
 });
 
@@ -36,7 +36,7 @@ router.put('/events/:id', upload.single('imgUrl'), async (req, res) => {
 });
 
 // DELETE
-router.delete('/events/:id', (req, res) => {
+router.delete('/events/:id', async (req, res) => {
     eventController.deleteEvent(req, res);
 });
 
