@@ -10,6 +10,15 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
         </ul>
-        <a href="/login" title="login" class="h4">Login</a>
+        {{#if session.loggedIn}}
+            <div class="account">
+                <span class="username h3">{{session.username}}</span>
+                <form action="/signout" method="POST">
+                    <button type="submit" class="btn h4">Sign out</a>
+                </form>
+            </div>
+        {{else}}
+            <a href="/login" title="login" class="h4">Login</a>
+        {{/if}}
     </div>
 </nav>
