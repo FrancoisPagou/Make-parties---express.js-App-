@@ -1,12 +1,14 @@
 import './App.css';
-import Navbar from './components/Navbar';
-import Layout from './components/layout/Layout';
+import { Route, Routes } from 'react-router-dom';
+import Home from './components/pages/Home';
+import Login from './components/pages/Login';
 
 function App() {
     return (
-		<div className="App">
-			<Navbar />
-		</div>
+		<Routes>
+			<Route path="/" element={<Home />} />
+			<Route path="login" element={<Login />} />
+		</Routes>
     );
 }
 
