@@ -1,30 +1,31 @@
 import React from 'react'
 import logo from '../images/log-make-parties.png'
-import { Box, Container, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
+import Login from './pages/Login'
+import { Container } from '@mui/system'
 
 function Navbar() {
   return (
     <header>
-        <Stack 
-            direction="row" 
-            spacing={2}
-            sx={{ 
-                justifyContent: 'space-between',
-                alignItems:'center'
-            }}
-        >
-            <Box id="logo">
+        <Container maxWidth="xl">
+            <Stack 
+                direction="row"
+                sx={{ 
+                    justifyContent: 'space-between',
+                    alignItems:'center'
+                }}
+            >
                 <Link to='/'><img src={logo} alt="logo" width={100}/></Link>
-            </Box>
-            <Box className='account'>
-                <a href='/login'>
-                    <Typography>
+                <Link to='/login' element={<Login />}>
+                    <Typography variant="button"
+                        fontSize={18}
+                    >
                         Login
                     </Typography>
-                </a>
-            </Box>
-        </Stack>
+                </Link>
+            </Stack>
+        </Container>
     </header>
   )
 }
