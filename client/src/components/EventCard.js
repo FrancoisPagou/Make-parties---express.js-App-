@@ -1,20 +1,22 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
 import React from 'react'
+import {BASE_URL} from '../utils/apiUrl';
 
-function EventCard({image, title, desc}) {
+function EventCard({img, title, description}) {
+	const IMG_PATH = `${BASE_URL}/images`;
 	return (
 		<Card sx={{ width: '100%', maxWidth: {xs: '100%', sm: '30%'}, mb: 20 }}>
 			<CardMedia
 				component="img"
-				image={image}
-				alt="green iguana"
+				image={`${IMG_PATH}/${img}`}
+				alt=""
 			/>
 			<CardContent>
 				<Typography gutterBottom variant="h5" component="div">
 					{title}
 				</Typography>
 				<Typography variant="body2" color="text.secondary">
-					{desc}
+					{description}
 				</Typography>
 			</CardContent>
 			<CardActions>

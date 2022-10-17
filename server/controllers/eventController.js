@@ -6,7 +6,8 @@ const Resize = require('../utils/Resize');
 
 exports.getAllEvents = async (req, res) => {
     const events = await models.Event.findAll({ order: [['createdAt', 'DESC']] });
-    res.render('events-index', { events: events });
+    res.send(events);
+    // res.render('events-index', { events: events });
 }
 
 exports.getCreateEventForm = (req, res) => {

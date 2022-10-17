@@ -8,9 +8,9 @@ function EventList({events}) {
                 events.map((event, index) => (
                     <EventCard 
                         key={index}
-                        img={event.image}
+                        img={event.imgUrl}
                         title={event.title}
-                        description={event.description}
+                        description={event.desc}
                     />
                 ))
             }

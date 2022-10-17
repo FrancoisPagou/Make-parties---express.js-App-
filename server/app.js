@@ -7,6 +7,7 @@ const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-acce
 const bodyParser = require('body-parser');
 const models = require("./models");
 const bcrypt = require('bcrypt');
+const cors = require('cors');
 
 const eventsRouter = require('./routes/eventsRouter');
 const rsvpRouter = require('./routes/rsvpsRouter');
@@ -21,6 +22,10 @@ app.use(session({
 	secret: 'secret',
 	resave: true,
 	saveUninitialized: true
+}));
+
+app.use(cors({
+    origin: 'http://localhost:3001'
 }));
 
 /* passed the session to all handlebars templates */
@@ -59,8 +64,6 @@ app.post('/auth', async (req, res) => {
         try {
             const User = await models.User.findOne({where: {username: username}});
             const isValid = await bcrypt.compare(password, User.password);
-
-            console.log("User ", User);
 
             if (isValid) {
                 req.session.loggedIn = true;
